@@ -1,0 +1,19 @@
+
+# java artifacts
+*target*
+*.jar
+*.class
+
+# eclipse specific git ignore
+.project
+.metadata
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+
+.classpath
+.settings/
+.loadpath
+*.launch
