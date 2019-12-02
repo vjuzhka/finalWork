@@ -1,10 +1,17 @@
 package com.accenture.finalproject.farm;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Farmer {
 	private String name;
 	private int foodAmount;
 	private double budget;
-	private boolean activeStatus = false;
+	private boolean activeStatus = true;
+	private static Random rand = new Random();
+	static final double MIN_MONEY = 100;
+	static final double MAX_MONEY = 1000;
+	static final int MIN_FOOD = 200;
+	static final int MAX_FOOD = 500;	
 
 	public Farmer(String name, int foodAmount, double budget) {
 		this.name = name;
@@ -57,7 +64,6 @@ public class Farmer {
 
 	private boolean checkFood(int givingFoodAmount) {
 		if (this.foodAmount > givingFoodAmount) {
-
 			return true;
 		} else {
 			System.out.println("Sorry, farmer " + this.name + " doesn't have "
@@ -75,8 +81,8 @@ public class Farmer {
 			return false;
 		}
 	}
-	
-	private void foodExchange (Farmer farmer, int foodAmount ) {
+
+	private void foodExchange(Farmer farmer, int foodAmount) {
 		farmer.foodAmount = farmer.foodAmount + foodAmount;
 		this.foodAmount = this.foodAmount - foodAmount;
 	}
@@ -84,8 +90,8 @@ public class Farmer {
 	public void giveFood(Farmer farmer, int givingFoodAmount) {
 		if (this.checkFood(givingFoodAmount)) {
 			this.foodExchange(farmer, givingFoodAmount);
-			System.out.println(this.name + " gifted " + givingFoodAmount + " kg of food to "
-					+ farmer.name);
+			System.out.println(this.name + " gifted " + givingFoodAmount
+					+ " kg of food to " + farmer.name);
 		} else {
 			System.out.println("Sorry, farmer " + this.name + "doesn't have "
 					+ givingFoodAmount + "kg of food to donate them to "
@@ -97,9 +103,9 @@ public class Farmer {
 		if (farmer.checkFood(foodAmount) && (this.checkMoney(money))) {
 			this.moneyExchange(farmer, money);
 			farmer.foodExchange(this, foodAmount);
-			System.out.println(this.name + " purchased " + foodAmount + " kg of food from  "
-					+ farmer.name + " for " + money + " EUR");
-
+			System.out.println(this.name + " purchased " + foodAmount
+					+ " kg of food from  " + farmer.name + " for " + money
+					+ " EUR");
 		}
 	}
 
@@ -111,8 +117,8 @@ public class Farmer {
 	public void giftMoneyTo(Farmer farmer, double giftedMoney) {
 		if (this.checkMoney(giftedMoney)) {
 			this.moneyExchange(farmer, giftedMoney);
-			System.out.println(this.name + " gifted " + giftedMoney + " EUR to "
-					+ farmer.name);
+			System.out.println(this.name + " gifted " + giftedMoney
+					+ " EUR to " + farmer.name);
 		}
 	}
 
@@ -121,12 +127,47 @@ public class Farmer {
 			farmer.moneyExchange(this, money);
 			System.out.println(this.name + " Steal " + money + " from "
 					+ farmer.name + " EUR");
-		} 
+		}
 	}
 
 	public String toString() {
 		return "Farmers [name = " + name + ", food = " + foodAmount
-				+ " kg, budget = " + budget + " EUR]";
+				+ " kg, budget = " + String.format("%.2f", budget) + " EUR]";
+	}
+	
+	public static void makeRandomFarmers(ArrayList<Farmer> farmerList) {
+		farmerList.add(Farmer.getFarmer("Michael"));
+		farmerList.add(Farmer.getFarmer("Valerija"));
+		farmerList.add(Farmer.getFarmer("Chanel"));
+		farmerList.add(Farmer.getFarmer("Innokentij"));
+		farmerList.add(Farmer.getFarmer("Vasilij"));
+		farmerList.add(Farmer.getFarmer("Semjon"));
+		farmerList.add(Farmer.getFarmer("Aleksandex"));
+		farmerList.add(Farmer.getFarmer("Marija"));
+		farmerList.add(Farmer.getFarmer("Okulina"));
+		farmerList.add(Farmer.getFarmer("elena"));
+		
+
+	}
+	
+	public static Farmer getFarmer(String name) {
+		return new Farmer(name, radomPointFood(MAX_FOOD, MIN_FOOD),
+				radomPointMoney(MIN_MONEY, MAX_MONEY));
+	}
+	
+	private static double radomPointMoney(double max, double min) {
+		return rand.nextDouble()*(max - min) + min;
+	}
+
+	private static int radomPointFood(int max, int min) {
+		return rand.nextInt((max - min) + 1) + min;
+	}
+	
+	public static void printInfoListFarmers(ArrayList<Farmer> farmerList) {
+		System.out.println("Info of our village:");
+		for (int i = 0; i< farmerList.size(); i++) {
+			System.out.println(farmerList.get(i));
+		}
 	}
 
 }
