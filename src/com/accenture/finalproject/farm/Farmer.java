@@ -145,7 +145,7 @@ public class Farmer {
 		farmerList.add(Farmer.getFarmer("Aleksandex"));
 		farmerList.add(Farmer.getFarmer("Marija"));
 		farmerList.add(Farmer.getFarmer("Okulina"));
-		farmerList.add(Farmer.getFarmer("elena"));
+		farmerList.add(Farmer.getFarmer("Klava"));
 		
 
 	}
