@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Farmer {
-	private String name;
+	public String name;
 	private int foodAmount;
 	private double budget;
 	private boolean activeStatus = true;
@@ -148,6 +148,7 @@ public class Farmer {
 		farmerList.add(Farmer.getFarmer("Klava"));
 		
 
+
 	}
 	
 	public static Farmer getFarmer(String name) {
@@ -169,5 +170,16 @@ public class Farmer {
 			System.out.println(farmerList.get(i));
 		}
 	}
-
+	
+	public static int searchForFarmer (String name, ArrayList<Farmer> farmerList) {
+		int idOfFarmer=0;
+		for (int i = 0; i < farmerList.size(); i++) {
+			if (farmerList.get(i).name == name) {
+				System.out.println("ja nashol okulinu, pod nomerom " + (i+1));
+				idOfFarmer = i;
+			}
+		}
+		return idOfFarmer;
+		
+	}
 }
