@@ -1,9 +1,12 @@
 package com.accenture.finalproject.farm;
+
+
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Farmer {
-	private String name;
+	public String name;
 	private int foodAmount;
 	private double budget;
 	private boolean activeStatus = true;
@@ -12,11 +15,14 @@ public class Farmer {
 	static final double MAX_MONEY = 1000;
 	static final int MIN_FOOD = 200;
 	static final int MAX_FOOD = 500;	
+	static Scanner userInput = new Scanner(System.in);
 
 	public Farmer(String name, int foodAmount, double budget) {
 		this.name = name;
 		this.foodAmount = foodAmount;
 		this.budget = budget;
+		this.activeStatus = true;
+
 	}
 
 	public String getName() {
@@ -90,8 +96,8 @@ public class Farmer {
 	public void giveFood(Farmer farmer, int givingFoodAmount) {
 		if (this.checkFood(givingFoodAmount)) {
 			this.foodExchange(farmer, givingFoodAmount);
-			System.out.println(this.name + " gifted " + givingFoodAmount
-					+ " kg of food to " + farmer.name);
+			System.out.println(this.name + " gifted " + givingFoodAmount +" kg of food to" + farmer.name);
+
 		} else {
 			System.out.println("Sorry, farmer " + this.name + "doesn't have "
 					+ givingFoodAmount + "kg of food to donate them to "
@@ -132,9 +138,16 @@ public class Farmer {
 
 	public String toString() {
 		return "Farmers [name = " + name + ", food = " + foodAmount
-				+ " kg, budget = " + String.format("%.2f", budget) + " EUR]";
++ " kg, budget = " + String.format("%.2f", budget) + " EUR]";
 	}
 	
+	public void info() {
+
+		System.out.println("Farmers [name = " + name + ", food = " + foodAmount
+				+ " kg, budget = " + String.format("%.2f", budget) + " EUR, status: " + activeStatus
+				+ ".");
+	}
+
 	public static void makeRandomFarmers(ArrayList<Farmer> farmerList) {
 		farmerList.add(Farmer.getFarmer("Michael"));
 		farmerList.add(Farmer.getFarmer("Valerija"));
@@ -145,8 +158,9 @@ public class Farmer {
 		farmerList.add(Farmer.getFarmer("Aleksandex"));
 		farmerList.add(Farmer.getFarmer("Marija"));
 		farmerList.add(Farmer.getFarmer("Okulina"));
-		farmerList.add(Farmer.getFarmer("elena"));
+		farmerList.add(Farmer.getFarmer("Klava"));
 		
+
 
 	}
 	
@@ -169,5 +183,17 @@ public class Farmer {
 			System.out.println(farmerList.get(i));
 		}
 	}
+	
+	public static int searchForFarmer (String name, ArrayList<Farmer> farmerList) {
+		int idOfFarmer=0;
+		for (int i = 0; i < farmerList.size(); i++) {
+			if (farmerList.get(i).name.equals(name) ) {
 
+				idOfFarmer = i;
+			}
+		}
+
+		return idOfFarmer;
+		
+	}
 }
