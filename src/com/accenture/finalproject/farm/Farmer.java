@@ -14,6 +14,8 @@ public class Farmer {
 	static final double MAX_MONEY = 1000;
 	static final int MIN_FOOD = 200;
 	static final int MAX_FOOD = 500;
+	static final int MAX_MOVES = 2; 
+	static final int MAX_DAYS = 2; 
 	static Scanner userInput = new Scanner(System.in);
 
 	public Farmer(String name, int foodAmount, double budget) {
@@ -95,12 +97,16 @@ public class Farmer {
 	}
 
 	public void giveFood(Farmer farmer, int givingFoodAmount) {
-		if (this.checkFood(givingFoodAmount)) {
-			this.foodExchange(farmer, givingFoodAmount);
-			System.out.println(this.name + " gifted " + givingFoodAmount + " kg of food to" + farmer.name);
+		if (givingFoodAmount > 0) {
+			if (this.checkFood(givingFoodAmount)) {
+				this.foodExchange(farmer, givingFoodAmount);
+				System.out.println(this.name + " gifted " + givingFoodAmount + " kg of food to" + farmer.name);
+			} else  {
+				System.out.println("Sorry, farmer " + this.name + "doesn't have " + givingFoodAmount
+						+ "kg of food to donate them to " + farmer.name);
+			}
 		} else {
-			System.out.println("Sorry, farmer " + this.name + "doesn't have " + givingFoodAmount
-					+ "kg of food to donate them to " + farmer.name);
+			System.out.println("Sorry, you can't donate negative number");
 		}
 	}
 
@@ -197,6 +203,19 @@ public class Farmer {
 			String farmerName = nameInput.nextLine();
 			farmerList.add(Farmer.getFarmer(farmerName));
 		}
+	}
+	
+	
+	public static int chooseFarmer (String farmer, ArrayList<Farmer> farmerList) {
+		int id =-1;
+		do {
+			id = Farmer.searchForFarmer(farmer, farmerList);
+			if (id < 0) {
+				System.out.println("Incorrect name. Let`s type the name again.");
+				farmer = userInput.next();
+			}
+		} while (id<0);
+		return id;
 	}
 
 //	public static boolean containName(String name, ArrayList<Farmer> farmerList) {
