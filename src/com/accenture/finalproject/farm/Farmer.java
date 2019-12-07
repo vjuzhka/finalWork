@@ -14,8 +14,8 @@ public class Farmer {
 	static final double MAX_MONEY = 1000;
 	static final int MIN_FOOD = 200;
 	static final int MAX_FOOD = 500;
-	static final int MAX_MOVES = 2; 
-	static final int MAX_DAYS = 2; 
+	static final int MAX_MOVES = 5;
+	static final int MAX_DAYS = 3;
 	static Scanner userInput = new Scanner(System.in);
 
 	public Farmer(String name, int foodAmount, double budget) {
@@ -65,19 +65,20 @@ public class Farmer {
 		if (foodAmount > 0 && price > 0) {
 			this.foodAmount = this.foodAmount - foodAmount;
 			this.budget = this.budget + price;
-			System.out.println("Farmer " + this.name + " sold " + foodAmount + "kg for " + price + " EUR");
+			System.out.println("Farmer " + this.name + " sold " + foodAmount
+					+ "kg for " + price + " EUR");
 		} else {
-			System.out.println("Sorry, you can't sell your food! Incorrect input. You loose your move.");
+			System.out
+					.println("Sorry, you can't sell your food! Incorrect input. You loose your move.");
 		}
 	}
-	
-
 
 	private boolean checkFood(int givingFoodAmount) {
 		if (this.foodAmount > givingFoodAmount) {
 			return true;
 		} else {
-			System.out.println("Sorry, farmer " + this.name + " doesn't have " + givingFoodAmount + "kg of food");
+			System.out.println("Sorry, farmer " + this.name + " doesn't have "
+					+ givingFoodAmount + "kg of food");
 			return false;
 		}
 	}
@@ -86,7 +87,8 @@ public class Farmer {
 		if (this.budget > givingMoneyAmount) {
 			return true;
 		} else {
-			System.out.println("Sorry, farmer " + this.name + " doesn't have " + givingMoneyAmount + "EUR");
+			System.out.println("Sorry, farmer " + this.name + " doesn't have "
+					+ givingMoneyAmount + "EUR");
 			return false;
 		}
 	}
@@ -100,9 +102,11 @@ public class Farmer {
 		if (givingFoodAmount > 0) {
 			if (this.checkFood(givingFoodAmount)) {
 				this.foodExchange(farmer, givingFoodAmount);
-				System.out.println(this.name + " gifted " + givingFoodAmount + " kg of food to" + farmer.name);
-			} else  {
-				System.out.println("Sorry, farmer " + this.name + "doesn't have " + givingFoodAmount
+				System.out.println(this.name + " gifted " + givingFoodAmount
+						+ " kg of food to" + farmer.name);
+			} else {
+				System.out.println("Sorry, farmer " + this.name
+						+ "doesn't have " + givingFoodAmount
 						+ "kg of food to donate them to " + farmer.name);
 			}
 		} else {
@@ -111,11 +115,17 @@ public class Farmer {
 	}
 
 	public void purchaseFrom(Farmer farmer, int foodAmount, double money) {
-		if (farmer.checkFood(foodAmount) && (this.checkMoney(money))) {
-			this.moneyExchange(farmer, money);
-			farmer.foodExchange(this, foodAmount);
-			System.out.println(this.name + " purchased " + foodAmount + " kg of food from  " + farmer.name + " for "
-					+ money + " EUR");
+		if (foodAmount > 0 && money > 0) {
+			if (farmer.checkFood(foodAmount) && (this.checkMoney(money))) {
+				this.moneyExchange(farmer, money);
+				farmer.foodExchange(this, foodAmount);
+				System.out.println(this.name + " purchased " + foodAmount
+						+ " kg of food from  " + farmer.name + " for " + money
+						+ " EUR");
+			}
+		} else {
+			System.out
+					.println("Sorry, you can't buy NEGATIVE food! Incorrect input. You loose your move.");
 		}
 	}
 
@@ -125,9 +135,15 @@ public class Farmer {
 	}
 
 	public void giftMoneyTo(Farmer farmer, double giftedMoney) {
-		if (this.checkMoney(giftedMoney)) {
-			this.moneyExchange(farmer, giftedMoney);
-			System.out.println(this.name + " gifted " + giftedMoney + " EUR to " + farmer.name);
+		if (giftedMoney > 0) {
+			if (this.checkMoney(giftedMoney)) {
+				this.moneyExchange(farmer, giftedMoney);
+				System.out.println(this.name + " gifted " + giftedMoney
+						+ " EUR to " + farmer.name);
+			}
+		} else {
+			System.out
+					.println("Sorry, you can't donate negative number. Incorrect input. You loose your move.");
 		}
 	}
 
@@ -135,38 +151,42 @@ public class Farmer {
 		if (money > 0) {
 			if (farmer.checkMoney(money)) {
 				farmer.moneyExchange(this, money);
-				System.out.println(this.name + " Steal " + money + " EUR from " + farmer.name );
+				System.out.println(this.name + " Steal " + money + " EUR from "
+						+ farmer.name);
 			}
 		} else {
-			System.out.println("Sorry, you can't steal money. Incorrect input. You loose your move.");
+			System.out
+					.println("Sorry, you can't steal NEGATIVE money. Incorrect input. You loose your move.");
 		}
 	}
 
 	public String toString() {
-		return "Farmers [name = " + name + ", food = " + foodAmount + " kg, budget = " + String.format("%.2f", budget)
-				+ " EUR]";
+		return "Farmers [name = " + name + ", food = " + foodAmount
+				+ " kg, budget = " + String.format("%.2f", budget) + " EUR]";
 	}
 
 	public void info() {
-		System.out.println("Farmers [name = " + name + ", food = " + foodAmount + " kg, budget = "
-				+ String.format("%.2f", budget) + " EUR, status: " + activeStatus + ".");
+		System.out.println("Farmers [name = " + name + ", food = " + foodAmount
+				+ " kg, budget = " + String.format("%.2f", budget)
+				+ " EUR, status: " + activeStatus + ".");
 	}
 
 	public static void makeRandomFarmers(ArrayList<Farmer> farmerList) {
-		farmerList.add(Farmer.getFarmer("Michael"));
-		farmerList.add(Farmer.getFarmer("Valerija"));
-		farmerList.add(Farmer.getFarmer("Chanel"));
-		farmerList.add(Farmer.getFarmer("Innokentij"));
-		farmerList.add(Farmer.getFarmer("Vasilij"));
-		farmerList.add(Farmer.getFarmer("Semjon"));
-		farmerList.add(Farmer.getFarmer("Aleksandex"));
-		farmerList.add(Farmer.getFarmer("Marija"));
-		farmerList.add(Farmer.getFarmer("Okulina"));
-		farmerList.add(Farmer.getFarmer("Klava"));
+		farmerList.add(Farmer.getFarmer("Bob"));
+		farmerList.add(Farmer.getFarmer("John"));
+		farmerList.add(Farmer.getFarmer("Alice"));
+		farmerList.add(Farmer.getFarmer("Alex"));
+		farmerList.add(Farmer.getFarmer("Rob"));
+		farmerList.add(Farmer.getFarmer("Tom"));
+		farmerList.add(Farmer.getFarmer("Jerry"));
+		farmerList.add(Farmer.getFarmer("Lisa"));
+		farmerList.add(Farmer.getFarmer("Eva"));
+		farmerList.add(Farmer.getFarmer("Lena"));
 	}
 
 	public static Farmer getFarmer(String name) {
-		return new Farmer(name, radomPointFood(MAX_FOOD, MIN_FOOD), radomPointMoney(MIN_MONEY, MAX_MONEY));
+		return new Farmer(name, radomPointFood(MAX_FOOD, MIN_FOOD),
+				radomPointMoney(MIN_MONEY, MAX_MONEY));
 	}
 
 	private static double radomPointMoney(double max, double min) {
@@ -187,7 +207,7 @@ public class Farmer {
 	public static int searchForFarmer(String name, ArrayList<Farmer> farmerList) {
 		int idOfFarmer = -1;
 		for (int i = 0; i < farmerList.size(); i++) {
-			if (farmerList.get(i).name.equals(name)) {
+			if (farmerList.get(i).name.equalsIgnoreCase(name)) {
 				idOfFarmer = i;
 			}
 		}
@@ -195,31 +215,43 @@ public class Farmer {
 	}
 
 	public static void makeUserFarmers(ArrayList<Farmer> farmerList) {
-		System.out.println("How many farmers do you want to create?");
+		System.out
+				.println("How many farmers do you want to create? Remember, the minimum is 3");
 		int farmerNumber = userInput.nextInt();
+		int totalFarmers;
 		Scanner nameInput = new Scanner(System.in);
-		for (int i = 1; i < farmerNumber + 1; i++) {
+		if (farmerNumber < 3) {
+			totalFarmers = 3;
+		} else {
+			totalFarmers = farmerNumber;
+		}
+		for (int i = 1; i < totalFarmers + 1; i++) {
 			System.out.println("Please enter name of farmer Nr." + i);
 			String farmerName = nameInput.nextLine();
 			farmerList.add(Farmer.getFarmer(farmerName));
 		}
 	}
-	
-	
-	public static int chooseFarmer (String farmer, ArrayList<Farmer> farmerList) {
-		int id =-1;
+
+	public static int chooseFarmer(String farmer, ArrayList<Farmer> farmerList) {
+		int id = -1;
 		do {
 			id = Farmer.searchForFarmer(farmer, farmerList);
 			if (id < 0) {
-				System.out.println("Incorrect name. Let`s type the name again.");
+				System.out
+						.println("Incorrect name. Let`s type the name again.");
 				farmer = userInput.next();
 			}
-		} while (id<0);
+		} while (id < 0);
 		return id;
 	}
 
-//	public static boolean containName(String name, ArrayList<Farmer> farmerList) {
-//		System.out.println(farmerList.contains(name));
-//		return farmerList.getcontains(name);
-//	}
+	public static double checkCorrectNumber() {
+		String input;
+		while (!userInput.hasNextDouble()) {
+			System.out.println("Uncorrect input, please try again");
+			input = userInput.next();
+		}
+		return userInput.nextDouble();
+	}
+
 }
