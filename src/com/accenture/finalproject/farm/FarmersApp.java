@@ -53,7 +53,7 @@ public class FarmersApp {
 						+ Farmer.MAX_MOVES
 						+ " moves each day! We will play for"
 						+ Farmer.MAX_DAYS
-						+ " days");
+						+ " days until winter will come");
 
 		for (int j = 1; j <= Farmer.MAX_DAYS; j++) {
 			for (int i = 1; i <= Farmer.MAX_MOVES;) {
@@ -163,11 +163,13 @@ public class FarmersApp {
 
 			}
 		}
-		System.out.println("---=--=-=-=-==-=-==-=-END OF A GAME +=--=-=-=-==-=-=-=-=-=-==-=-");
+		System.out.println("---=--=-=-=-==-=-==-=-END OF A GAME. The winter has come+=--=-=-=-==-=-=-=-=-=-==-=-");
 		System.out.println("Thanks for playing! You are out of the moves");
 		System.out.println("The total result of game: ");
 		Farmer.printInfoListFarmers(farmerList);
-
+		System.out.println("The richest Farmer is " + farmerList.get(Farmer.searchForFarmerRichest(farmerList)).getName()+ "This farmer's family have " + String.format("%.2f", farmerList.get(Farmer.searchForFarmerRichest(farmerList)).getBudget()) + " EUR");
+		System.out.println("The family of Farmer " + farmerList.get(Farmer.searchForFarmerMostFood(farmerList)).getName() + "have the most food " + farmerList.get(Farmer.searchForFarmerRichest(farmerList)).getFoodAmount() + " kg. They will survive the winter.");
+		
 	}
 
 }

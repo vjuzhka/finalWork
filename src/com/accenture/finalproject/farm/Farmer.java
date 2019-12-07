@@ -8,21 +8,20 @@ public class Farmer {
 	public String name;
 	private int foodAmount;
 	private double budget;
-	private boolean activeStatus = true;
 	private static Random rand = new Random();
 	static final double MIN_MONEY = 100;
 	static final double MAX_MONEY = 1000;
 	static final int MIN_FOOD = 200;
 	static final int MAX_FOOD = 500;
-	static final int MAX_MOVES = 5;
-	static final int MAX_DAYS = 3;
+	static final int MAX_MOVES = 2;
+	static final int MAX_DAYS = 1;
 	static Scanner userInput = new Scanner(System.in);
 
 	public Farmer(String name, int foodAmount, double budget) {
 		this.name = name;
 		this.foodAmount = foodAmount;
 		this.budget = budget;
-		this.activeStatus = true;
+
 	}
 
 	public String getName() {
@@ -49,13 +48,6 @@ public class Farmer {
 		this.budget = budget;
 	}
 
-	private boolean checkStatus() {
-		if (this.activeStatus) {
-			return true;
-		}
-		return false;
-	}
-
 	public void rename(String name) {
 		System.out.println(this.name + " was renamed to " + name);
 		setName(name);
@@ -74,7 +66,7 @@ public class Farmer {
 	}
 
 	private boolean checkFood(int givingFoodAmount) {
-		if (this.foodAmount > givingFoodAmount) {
+		if (this.foodAmount >= givingFoodAmount) {
 			return true;
 		} else {
 			System.out.println("Sorry, farmer " + this.name + " doesn't have "
@@ -161,14 +153,14 @@ public class Farmer {
 	}
 
 	public String toString() {
-		return "Farmers [name = " + name + ", food = " + foodAmount
+		return "Farmer [name = " + name + ", food = " + foodAmount
 				+ " kg, budget = " + String.format("%.2f", budget) + " EUR]";
 	}
 
 	public void info() {
-		System.out.println("Farmers [name = " + name + ", food = " + foodAmount
+		System.out.println("Farmer [name = " + name + ", food = " + foodAmount
 				+ " kg, budget = " + String.format("%.2f", budget)
-				+ " EUR, status: " + activeStatus + ".");
+				+ " EUR.");
 	}
 
 	public static void makeRandomFarmers(ArrayList<Farmer> farmerList) {
@@ -253,5 +245,26 @@ public class Farmer {
 		}
 		return userInput.nextDouble();
 	}
+	
+	public static int searchForFarmerRichest( ArrayList<Farmer> farmerList) {
+		int id = -1;
+		Farmer richestFarmer = farmerList.get(0);
+		for (int i = 0; i < farmerList.size(); i++) {
+			if (farmerList.get(i).budget > richestFarmer.budget ) {
+				id = i;
+			}
+		}
+		return id;
+	}
 
+	public static int searchForFarmerMostFood( ArrayList<Farmer> farmerList) {
+		int id = -1;
+		Farmer richestFarmer = farmerList.get(0);
+		for (int i = 0; i < farmerList.size(); i++) {
+			if (farmerList.get(i).foodAmount > richestFarmer.foodAmount ) {
+				id = i;
+			}
+		}
+		return id;
+	}
 }
